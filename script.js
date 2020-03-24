@@ -35,37 +35,25 @@ function isValidEmail(email) {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
 }
+//Creating the checkRequired function
+function checkRequired(inputArr) {
+  //looping through array, the foreach is the metod for loop array
+  inputArr.forEach(function(input) {
+    if (input.value.trim() === "") {
+      showError(input, `${getFiledName(input)} is required`);
+    } else {
+      showSuccess(input);
+    }
+  });
+}
+//GetFieldname function
+function getFiledName(input) {
+  return input.id.charAt(0).toUpperCase() + input.id.slice(1);
+}
 
 //Adding the eventlistenr on submit action
 form.addEventListener("submit", function(e) {
   e.preventDefault();
-  //If the username is empty than do this code
-  if (username.value === "") {
-    //Callig the fucntion with parametars
-    showError(username, "Username is required");
-  } else {
-    //if the username is not empty
-    //call function
-    showSuccess(username);
-  }
-
-  if (email.value === "") {
-    showError(email, "Email is required");
-  } else if (!isValidEmail(email.value)) {
-    showError(email, "Email is not valid");
-  } else {
-    showSuccess(email);
-  }
-
-  if (password.value === "") {
-    showError(password, "Password is required");
-  } else {
-    showSuccess(password);
-  }
-
-  if (password2.value === "") {
-    showError(password2, "Email is required");
-  } else {
-    showSuccess(password2);
-  }
+  //Calling the custom function
+  checkRequired([username, email, password, password2]);
 });
